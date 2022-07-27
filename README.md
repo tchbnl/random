@@ -23,7 +23,7 @@ Usage:
 resettispaghetti username
 ```
 
-The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so there's code to strip out the error that the account doesn't exist. You'll need to change the actual cPanel user password to change that one.
+The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so there's code to strip out the error that the account doesn't exist.
 
 ## Notes
 
