@@ -61,8 +61,8 @@ find /opt/cpanel/ -iname pecl | grep bin | while read pecl; do $pecl install ima
 From WHM => Service Configuration => Exim Configuration Manager, switch to the Advanced Editor tab and look for "custom_begin_mail_pre". Make sure it's checked and add:
 
 ```
-accept  hosts = :
+accept hosts = :
 
   warn hosts = 127.0.0.1
-        control = submission/sender_retain
+       control = submission/sender_retain
 ```
