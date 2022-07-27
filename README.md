@@ -23,7 +23,7 @@ Usage:
 resettispaghetti username
 ```
 
-The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so this will strip out the error that the account doesn't exist. You'll need to change the actual cPanel user password to change that one.
+The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so there's code to strip out the error that the account doesn't exist. You'll need to change the actual cPanel user password to change that one.
 
 ## Notes
 
@@ -31,20 +31,20 @@ The reset account and new password will be returned on a new line. The API also 
 
 The official cPanel article for this is broken.
 
-1. Remove `ImageMagick` packages if already installed:
+1. Remove ImageMagick packages if already installed.
 
 ```
 yum remove ImageMagick ImageMagick-devel
 ```
 
-2. Add the Remi repository.
+2. Add the Remi repo (and optionally disable the remi-safe repo that's enabled by default).
 
 ```
 yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 yum-config-manager --disable remi-safe
 ```
 
-3. Install the `ImageMagick` packages from Remi. For some reason `libzip5` isn't a listed dependency, but it's needed.
+3. Install the ImageMagick packages from Remi. For some reason `libzip5` isn't a listed dependency, but it's needed.
 
 ```
 yum install --enablerepo=remi ImageMagick7 ImageMagick7-devel libzip5
