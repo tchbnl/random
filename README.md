@@ -1,3 +1,5 @@
+## Scripts
+
 Reset all email accounts under a cPanel with randomized passwords. Useful if the account was hacked.
 
 ```bash
@@ -23,9 +25,9 @@ resettispaghetti username
 
 The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so this will strip out the error that the account doesn't exist. You'll need to change the actual cPanel user password to change that one.
 
----
+## Notes
 
-**Enable WebP support in ImageMagick and PHP on cPanel.**
+### Enable WebP support in ImageMagick and PHP on cPanel
 
 The official cPanel article for this is broken.
 
