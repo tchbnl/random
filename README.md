@@ -24,3 +24,32 @@ resettispaghetti username
 The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so this will strip out the error that the account doesn't exist. You'll need to change the actual cPanel user password to change that one.
 
 ---
+
+**Enable WebP support in ImageMagick and PHP on cPanel.**
+
+The official cPanel article for this is broken.
+
+1. Remove `ImageMagick` packages if already installed:
+
+```
+yum remove ImageMagick ImageMagick-devel
+```
+
+2. Add the Remi repository.
+
+```
+yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum-config-manager --disable remi-safe
+```
+
+3. Install the `ImageMagick` packages from Remi. For some reason `libzip5` isn't a listed dependency, but it's needed.
+
+```
+yum install --enablerepo=remi ImageMagick7 ImageMagick7-devel libzip5
+```
+
+4. Install the `imagick` PECL for all PHP versions.
+
+```
+find /opt/cpanel/ -iname pecl | grep bin | while read pecl; do $pecl install imagick; done
+```
