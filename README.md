@@ -55,3 +55,14 @@ yum install --enablerepo=remi ImageMagick7 ImageMagick7-devel libzip5
 ```
 find /opt/cpanel/ -iname pecl | grep bin | while read pecl; do $pecl install imagick; done
 ```
+
+### Missing Message-Id: header when sending to Gmail
+
+From WHM => Service Configuration => Exim Configuration Manager, switch to the Advanced Editor tab and look for "custom_begin_mail_pre". Make sure it's checked and add:
+
+```
+accept  hosts = :
+
+  warn hosts = 127.0.0.1
+        control = submission/sender_retain
+```
