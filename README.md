@@ -1,4 +1,5 @@
-Reset all email accounts under a cPanel account. Useful if the account was hacked.
+Reset all email accounts under a cPanel account with randomized passwords. Useful if the account was hacked.
+
 ```bash
 resettispaghetti()
 {
@@ -19,3 +20,7 @@ Usage:
 ```
 resettispaghetti username
 ```
+
+The reset account and new password will be returned on a new line.
+
+---
