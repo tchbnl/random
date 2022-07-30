@@ -6,6 +6,7 @@ Reset all email accounts under a cPanel with randomized passwords. Useful if the
 resettispaghetti()
 {
     ACCOUNTS="$(uapi --user=$1 Email list_pops | grep -i "email:" | awk '{print $2}')"
+
     for ACCOUNT in $ACCOUNTS; do
         PASS="$(openssl rand -base64 16)"
         resetPass="$(uapi --user=$1 Email passwd_pop email="$ACCOUNT" password="$PASS")"
@@ -24,6 +25,39 @@ resettispaghetti username
 ```
 
 The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so there's code to strip out the error that the account doesn't exist.
+
+---
+
+Kill all processes on the server that could be contributing to runaway high load (_except_ MySQL). For emergencies only.
+
+```bash
+k911()
+{
+    TARGETS=("dovecot"
+             "exim"
+             "gzip"
+             "httpd"
+             "nginx"
+             "php"
+             "php-cgi"
+             "php-fpm"
+             "pigz"
+             "suphp")
+
+    for TARGET in ${TARGETS[@]}; do
+        killall -9 $TARGET 2>/dev/null
+        echo "Killed: $TARGET"
+    done
+}
+```
+
+Usage:
+
+```
+k911
+```
+
+This shouldn't be run regularly. Useful in cases where a server is seeing immediate spikes to 100+ load right after reboot. Reboot the server, hop in the moment it's up, and run. Proceed with damage control.
 
 ## Notes
 
