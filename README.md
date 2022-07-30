@@ -10,6 +10,7 @@ resettispaghetti()
     for ACCOUNT in $ACCOUNTS; do
         PASS="$(openssl rand -base64 16)"
         resetPass="$(uapi --user=$1 Email passwd_pop email="$ACCOUNT" password="$PASS")"
+
         RESPONSE="$(echo "$resetPass" | grep -i "You do not have an email account named")"
         if [[ $RESPONSE = "" ]]; then
             echo "${ACCOUNT}: ${PASS}"
