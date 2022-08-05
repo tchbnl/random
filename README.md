@@ -6,11 +6,9 @@ Reset all email accounts under a cPanel with randomized passwords. Useful if the
 resettispaghetti()
 {
   ACCOUNTS="$(uapi --user="$1" Email list_pops | grep -i 'email:' | awk '{print $2}')"
-
   for ACCOUNT in ${ACCOUNTS}; do
     PASS="$(openssl rand -base64 16)"
     uapi --user="$1" Email passwd_pop email="${ACCOUNT}" password="${PASS}" >/dev/null
-        
     echo "${ACCOUNT}: ${PASS}"
   done
 }
