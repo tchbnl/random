@@ -5,15 +5,14 @@ Reset all email accounts under a cPanel with randomized passwords. Useful if the
 ```bash
 resettispaghetti()
 {
-    ACCOUNTS="$(uapi --user=$1 Email list_pops | grep -i "email:" | awk '{print $2}')"
-    for ACCOUNT in $ACCOUNTS; do
-        PASS="$(openssl rand -base64 16)"
-        resetPass="$(uapi --user=$1 Email passwd_pop email="$ACCOUNT" password="$PASS")"
-        RESPONSE="$(echo "$resetPass" | grep -i "You do not have an email account named")"
-        if [[ $RESPONSE = "" ]]; then
-            echo "${ACCOUNT}: ${PASS}"
-        fi
-    done
+  ACCOUNTS="$(uapi --user="$1" Email list_pops | grep -i 'email:' | awk '{print $2}')"
+
+  for ACCOUNT in ${ACCOUNTS}; do
+    PASS="$(openssl rand -base64 16)"
+    uapi --user="$1" Email passwd_pop email="${ACCOUNT}" password="${PASS}" >/dev/null
+        
+    echo "${ACCOUNT}: ${PASS}"
+  done
 }
 ```
 
@@ -22,8 +21,6 @@ Usage:
 ```
 resettispaghetti username
 ```
-
-The reset account and new password will be returned on a new line. The API also returns the cPanel user _itself_, so there's code to strip out the error that the account doesn't exist.
 
 ---
 
