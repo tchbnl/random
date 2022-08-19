@@ -52,6 +52,36 @@ k911
 
 This shouldn't be run regularly. Useful in cases where a server is seeing immediate spikes to 100+ load right after reboot. Reboot the server, hop in the moment it's up, and run. Proceed with damage control.
 
+---
+
+Backup MySQL and cPanel user database details before an upgrade.
+
+```
+backup_mysql()
+{
+  BACKUP_DIR="/root/mysql_upgrade.$(date -I)"
+
+  mkdir "${BACKUP_DIR}" || return
+  cd "${BACKUP_DIR}" || return
+
+  for DATABASE in $(mysql -Ne 'SHOW DATABASES;' | grep -Ev 'information_schema|performance_schema'); do
+    mysqldump "${DATABASE}" > "${DATABASE}".sql
+  done
+
+  whmapi1 configureservice service=mysql enabled=1 monitored=0 >/dev/null
+  /scripts/restartsrv_mysql --stop >/dev/null
+
+  mkdir -p "${BACKUP_DIR}/var/lib"
+  rsync -a /var/lib/mysql "${BACKUP_DIR}/var/lib/"
+
+  whmapi1 configureservice service=mysql enabled=1 monitored=1 >/dev/null
+  /scripts/restartsrv_mysql --start >/dev/null
+
+  mkdir -p "${BACKUP_DIR}/var/cpanel"
+  rsync -a /var/cpanel/databases "${BACKUP_DIR}/var/cpanel/"
+}
+```
+
 ## Notes
 
 ### Enable WebP support in ImageMagick and PHP on cPanel
