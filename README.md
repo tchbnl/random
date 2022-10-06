@@ -5,12 +5,11 @@ Reset all email accounts under a cPanel with randomized passwords. Useful if the
 ```bash
 resettispaghetti()
 {
-  ACCOUNTS="$(uapi --user="$1" Email list_pops | grep -i 'email:' | awk '{print $2}')"
-  for ACCOUNT in ${ACCOUNTS}; do
-    PASS="$(openssl rand -base64 16)"
-    uapi --user="$1" Email passwd_pop email="${ACCOUNT}" password="${PASS}" >/dev/null
-    echo "${ACCOUNT}: ${PASS}"
-  done
+ACCOUNTS="$(uapi --user="${1}" Email list_pops | grep -i "email:" | grep -i "@" | awk '{print $2}')"
+for ACCOUNT in ${ACCOUNTS}; do
+  PASS="$(openssl rand -base64 16)"
+  uapi --user="${1}" Email passwd_pop email="${ACCOUNT}" password="${PASS}" >/dev/null
+done
 }
 ```
 
@@ -19,6 +18,18 @@ Usage:
 ```
 resettispaghetti username
 ```
+
+And reset a cPanel password:
+
+```bash
+rotatopotato()
+{
+PASS="$(openssl rand -base64 16)"
+whmapi1 passwd user="${1}" password="${PASS}" >/dev/null
+}
+```
+
+If I have to clean up a lot of cPanels, it's useful to just have this than doing it manually each time.
 
 ---
 
