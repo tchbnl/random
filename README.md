@@ -75,10 +75,17 @@ backup_mysql()
   mkdir "${BACKUP_DIR}" || return
   cd "${BACKUP_DIR}" || return
 
+  echo "Dumping databases to disk..."
+
   for DATABASE in $(mysql -Ne 'SHOW DATABASES;' | grep -Ev 'information_schema|performance_schema'); do
     mysqldump "${DATABASE}" > "${DATABASE}".sql
+    
+    echo "${DATABASE}" >> databases.txt
+    echo "Done: ${DATABASE}"
   done
 
+  echo "Backing up /var/lib/mysql/..."
+  
   whmapi1 configureservice service=mysql enabled=1 monitored=0 >/dev/null
   /scripts/restartsrv_mysql --stop >/dev/null
 
@@ -87,9 +94,15 @@ backup_mysql()
 
   whmapi1 configureservice service=mysql enabled=1 monitored=1 >/dev/null
   /scripts/restartsrv_mysql --start >/dev/null
+  
+  echo "Done."
 
+  echo "Backing up cPanel user database information..."
+  
   mkdir -p "${BACKUP_DIR}/var/cpanel"
   rsync -a /var/cpanel/databases "${BACKUP_DIR}/var/cpanel/"
+  
+  echo "Done."
 }
 ```
 
