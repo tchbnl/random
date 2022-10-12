@@ -1,6 +1,6 @@
 ## Scripts
 
-Reset all email accounts under a cPanel with randomized passwords.
+Reset all email accounts under a cPanel with randomized passwords:
 
 ```bash
 resettispaghetti()
@@ -31,7 +31,7 @@ rotatopotato()
 
 ---
 
-Backup MySQL and cPanel user database details before an upgrade.
+Backup MySQL and cPanel user database details before an upgrade:
 
 ```
 backup_mysql()
