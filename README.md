@@ -33,7 +33,7 @@ rotatopotato()
 
 Backup MySQL and cPanel user database details before an upgrade:
 
-```
+```bash
 backup_mysql()
 {
   BACKUP_DIR="/root/mysql_upgrade.$(date -I)"
