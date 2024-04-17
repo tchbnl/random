@@ -1,4 +1,4 @@
-I sometime write little scripts to do my job. Sometimes they even work. Here's ~~some~~ one of them.
+I sometimes write little scripts to do my job. Sometimes they even work. Here's ~~some~~ one of them.
 
 **A quick and dirty Apache log parser:**
 
