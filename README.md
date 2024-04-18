@@ -10,10 +10,10 @@ qndlp()
 access_log="${1}"
 dates="$(echo "$(date -d '24 hours ago' '+%d/%b/%Y:')|$(date -d 'now' '+%d/%b/%Y:')")"
 echo 'Top 10 Requests:'
-grep -E  "${dates}" "${access_log}" | grep -E '(GET)|(POST)' | awk -F '"' '{print $2}' | awk '{print $1, $2}' | sort | uniq -c | sort -nr | head -n 10
+grep -E "${dates}" "${access_log}" | grep -E '(GET)|(POST)' | awk -F '"' '{print $2}' | awk '{print $1, $2}' | sort | uniq -c | sort -nr | head -n 10
 echo
 echo 'Top 10 UAs:'
-grep -E "'${dates}" "${access_log}" | awk -F '"' '{print $6}' | sort | uniq -c | sort -nr | head -n 10
+grep -E "${dates}" "${access_log}" | awk -F '"' '{print $6}' | sort | uniq -c | sort -nr | head -n 10
 echo
 echo 'Top 10 IPs:'
 while IFS= read -r ip; do
@@ -22,7 +22,7 @@ if [[ -z "${reverse_dns}" ]]; then
 reverse_dns='No PTR record found.'
 fi
 echo -e "${ip}\t\t${reverse_dns}"
-done< <(grep -E  "${dates}" "${access_log}" | awk '{print $1}' | sort | uniq -c | sort -nr | head -n 10)
+done< <(grep -E "${dates}" "${access_log}" | awk '{print $1}' | sort | uniq -c | sort -nr | head -n 10)
 }
 ```
 
